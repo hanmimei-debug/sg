@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b0914">
+  <meta name="description" content="走進紫色燈海。BTS 新加坡演唱會 3D 座位視角、全場選座與歌曲站位參考；座位及場景為估算。">
+  <title>Purple Seat Singapore · 新加坡座位視角</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23130d22'/%3E%3Cpath d='M18 14v32l12 6V20zm28 0v32l-12 6V20z' fill='%23c5a4ff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css?v=sg2">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+</head>
+<body>
+<svg class="svg-defs" aria-hidden="true"><defs>
+ <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5Z"/></symbol>
+ <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+ <symbol id="i-map" viewBox="0 0 24 24"><path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2zm6-2v16m6-14v16"/></symbol>
+ <symbol id="i-orbit" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-35 12 12)"/><circle cx="12" cy="12" r="2"/><path d="M17 3h4v4"/></symbol>
+ <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M5 12v8h14v-8"/></symbol>
+ <symbol id="i-camera" viewBox="0 0 24 24"><path d="m3 6 5 0 2-3h4l2 3h5v15H3Z"/><circle cx="12" cy="13" r="4"/></symbol>
+ <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+ <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></symbol>
+</defs></svg>
+<header class="header">
+ <a class="brand" href="./" aria-label="Purple Seat 首頁"><span class="brand-symbol"><i></i><i></i></span><span>PURPLE<span class="brand-light"> SEAT</span><small>YOUR LITTLE PLACE IN THE PURPLE OCEAN</small></span></a>
+ <div class="event"><span class="event-dot"></span><span>SINGAPORE <span class="event-divider">/</span> 2026.12.17 · 19 · 20 · 22</span><span class="event-tag">ARIRANG</span></div>
+ <div class="header-actions"><button class="text-btn" id="info-open"><svg><use href="#i-info"/></svg><span>關於模擬</span></button><button id="share" class="share-btn"><svg><use href="#i-share"/></svg><span>分享座位</span></button></div>
+</header>
+<main class="workspace">
+ <section class="stage-window" aria-label="互動 3D 場館">
+  <div id="scene" tabindex="0" role="region" aria-label="3D 場館，拖曳旋轉、滾輪縮放。亦可使用下方視角按鈕及方向鍵。"></div>
+  <div class="scene-vignette"></div><div class="compass-badge">地圖方位：N 北 ↑ · E 東 →<small>成員走位：左右鏡像參考</small></div>
+  <div class="scene-heading"><div class="eyebrow"><span class="tiny-star">✦</span> A VIEW JUST FOR YOU</div><h1>在紫海裡，<br>找到你的位置<span>。</span></h1><p>新加坡國家體育場 <span>・</span> 360° 沉浸選座</p></div>
+  <div class="view-status"><span class="live-dot"></span><span id="view-title">自由環繞</span><span class="divider"></span><span>夢幻夜場</span></div>
+  <div class="scene-loading" id="loading"><span class="loading-orbit"></span><strong>正在點亮紫海</strong><small>為你準備一個小小的位置</small></div>
+  <div id="scene-error" class="scene-error" hidden><strong>這個瀏覽器暫時無法顯示 3D</strong><p>你仍可使用分區圖、排號選擇和歌曲站位。請嘗試開啟瀏覽器的硬體加速。</p></div>
+  <div class="scene-controls"><button id="zoom-in" class="icon-btn" aria-label="放大">＋</button><button id="zoom-out" class="icon-btn" aria-label="縮小">−</button><button id="reset" class="icon-btn" aria-label="重設視角">↺</button><button id="capture" class="icon-btn" aria-label="下載目前視角圖片"><svg><use href="#i-camera"/></svg></button></div>
+  <div class="scene-caption" id="scene-caption">拖曳探索場館 <span>·</span> 滾輪縮放 <span>·</span> 點選分區開始</div>
+  <div class="camera-bar" role="group" aria-label="視角模式"><button data-view="orbit" class="active" aria-pressed="true"><svg><use href="#i-orbit"/></svg>自由環繞</button><button data-view="seat" aria-pressed="false"><svg><use href="#i-eye"/></svg>我的座位</button><button data-view="top" aria-pressed="false"><svg><use href="#i-map"/></svg>俯視全場</button></div>
+ </section>
+ <aside class="seat-panel panel">
+  <div class="panel-heading"><span class="step">01</span><h2>找到你的座位</h2><span class="estimate-tag">估算版</span></div>
+  <div class="panel-subtitle">每一個位置，都有自己的浪漫。</div>
+  <div class="map-tabs" role="group" aria-label="座位圖範圍"><button id="map-overview" class="active" aria-pressed="true">全場分區</button><button id="map-detail" aria-pressed="false">本區座位</button></div>
+  <div class="map-container"><svg id="seat-map" viewBox="-112 -82 224 164" aria-label="全場分區圖，北上南下，東右西左"></svg><div id="seat-grid-wrap" hidden><canvas id="seat-grid" aria-label="本區估算座位，可使用下方排號表單選座"></canvas></div><div id="map-tooltip" hidden></div></div>
+  <div class="map-legend"><span><i class="legend-selected"></i>你的座位</span><span><i class="legend-stage"></i>舞台</span><span>N 北 ↑ · 走位左右鏡像</span></div>
+  <p class="reference-note map-caveat">分區依官方圖；每排座位為估算。PA 北／PB 東／PC 南／PD 西。</p>
+  <form id="seat-form">
+   <label for="section">座位區域 <span>SECTION</span></label><select id="section" name="section"></select>
+   <p id="source-seat" class="reference-note"></p><div class="number-fields"><div><label for="row">模擬排 <span>ROW</span></label><input id="row" type="number" min="1" value="5" inputmode="numeric" required></div><div><label for="seat">模擬號 <span>SEAT</span></label><input id="seat" type="number" min="1" value="8" inputmode="numeric" required></div></div>
+   <p id="seat-range" class="seat-range"></p><p id="form-error" role="alert" hidden></p>
+   <button type="submit" class="primary-btn">坐在這裡看舞台<svg><use href="#i-arrow"/></svg></button>
+  </form>
+  <div class="ticket"><div class="ticket-top"><svg><use href="#i-star"/></svg><span>YOUR PURPLE SEAT</span><small>SIMULATED</small></div><div class="ticket-seat"><strong id="ticket-section">PC4</strong><span><b id="ticket-row">05</b> 排</span><span><b id="ticket-seat">08</b> 號</span></div><div class="ticket-bottom"><span id="ticket-kind">內場 · 南 S / PC</span><span class="ticket-bars" aria-hidden="true"></span></div></div>
+  <p class="estimate-note"><svg><use href="#i-info"/></svg><span>排數、座號及位置為估算，不一定準確。<br>請以實際票券及現場為準。</span></p>
+ </aside>
+ <aside class="song-panel panel">
+  <div class="panel-heading"><span class="step">02</span><h2>跟著歌曲找他們</h2></div><div class="panel-subtitle">同一片紫海，不同的心動方向。</div>
+  <div class="song-list" role="group" aria-label="歌曲站位">
+   <button class="song active" data-song="center" aria-pressed="true"><span class="song-num">00</span><span><b>全員 · 中央舞台</b><small>SEVEN, TOGETHER</small></span><span class="song-dot"></span></button>
+   <button class="song" data-song="fake" aria-pressed="false"><span class="song-num">01</span><span><b>FAKE LOVE</b><small>花道交錯站位</small></span><span class="song-dot"></span></button>
+   <button class="song" data-song="fya" aria-pressed="false"><span class="song-num">02</span><span><b>FYA</b><small>四方花道站位</small></span><span class="song-dot"></span></button>
+   <button class="song" data-song="btb" aria-pressed="false"><span class="song-num">03</span><span><b>Body to Body</b><small>四方花道站位</small></span><span class="song-dot"></span></button>
+  </div>
+  <div id="phase-controls" hidden><span>參考圖的兩組位置 · 非核實時序</span><div class="map-tabs"><button data-phase="0" class="active" aria-pressed="true">位置組 A</button><button data-phase="1" aria-pressed="false">位置組 B</button></div></div>
+  <div class="member-heading"><h3>我的目光追隨</h3><button id="all-members" class="small-btn">全部成員</button></div><div id="members" class="members"></div>
+  <div class="position-card"><span class="eyebrow">ON THE STAGE</span><div id="position-title">七個人，一起在舞台中央。</div><p id="position-description">點選成員，讓鏡頭朝向他的方向。</p></div>
+  <div class="atmosphere"><label for="dream">夢幻燈海 <input type="checkbox" id="dream" checked><span class="toggle"></span></label><label for="confetti">飄落的紙花 <input type="checkbox" id="confetti" checked><span class="toggle"></span></label></div>
+  <p class="reference-note">走位沿用前圖並左右鏡像；非新加坡確定版本。<button id="sources-open">查看來源與說明 ↗</button></p>
+ </aside>
+</main>
+<footer><span>MADE FOR ARMY, WITH PURPLE LOVE.</span><span>非官方粉絲作品 <i>·</i> 座位與視線僅供參考</span></footer>
+<div id="toast" role="status" aria-live="polite"></div>
+<dialog id="info-dialog"><button class="dialog-close" aria-label="關閉說明">×</button><span class="eyebrow">A LITTLE NOTE</span><h2>關於這片紫海</h2><p>這是供 ARMY 探索的非官方 3D 座位模擬。場館、舞台、屏幕、人物大小和視線遮擋均為概念估算，不能用來保證實際觀演效果。</p><h3>新加坡站</h3><p>2026 年 12 月 17、19、20、22 日，19:00，National Stadium。官方圖採北上、南下、西左、東右；PA 北、PB 東、PC 南、PD 西。西側有露天天氣提示，四個 FOH 控台分列東西兩側。</p><h3>鏡像如何處理？</h3><p>依你的要求，將先前參考走位沿南北軸做左右鏡像：西北↔東北，西南↔東南。只鏡像成員位置，不改座位區號、官方羅盤或你的座位。鏡像版本尚未獲官方確認；地理方向亦不等於演出的正面。</p><p>1 Jin、2 SUGA、3 j-hope、4 RM、5 Jimin、6 V、7 Jung Kook，仍按年齡排序。FAKE LOVE 兩組參考位置不代表已核實時序。</p><h3>座位精度</h3><p>已覆蓋官方圖 54 個內場分區及 122 個看台分區（含 107A/B、119A/B、132A/B、144A/B）。官方圖不按比例繪製，也沒有逐座排號表。此版所有逐座位置、數字模擬排、座號及高度均為估算，不能直接對應票面字母排。近花道約 10 排，其餘內場約 18 排，部分區域會避開舞台縮減可用排數。</p><p>三層看台、穹頂邊框、舞台尺寸及屏幕為概念建模。西側露天提示來自官方圖，實際屋頂開合和視線以現場為準。</p><h3>官方與參考來源</h3><ul>
+<li><a href="https://www1.ticketmaster.sg/activity/detail/26sg_bts" target="_blank" rel="noopener">Ticketmaster · 活動及官方座位圖 ↗</a></li>
+<li><a href="https://www.thekallang.com.sg/en/things-to-do/events/bts-world-tour--arirang--in-singapore.html" target="_blank" rel="noopener">The Kallang · BTS 新加坡站 ↗</a></li>
+<li><a href="https://www.livenation.sg/event/bts-world-tour-arirang-in-singapore-singapore-tickets-edp1675139" target="_blank" rel="noopener">Live Nation · 日期及時間 ↗</a></li>
+<li><a href="https://www.thekallang.com.sg/en/plan-your-visit/venues-and-amenities/national-stadium.html" target="_blank" rel="noopener">National Stadium · 場館資料 ↗</a></li>
+<li><a href="./SOURCES.md" target="_blank" rel="noopener">檢索紀錄、方向及建模說明 ↗</a></li></ul><p class="muted">資料整理：2026.10.14。人物為程式化奶油白造型；不播放歌曲，未使用官方人物照片。</p></dialog>
+<dialog id="share-dialog"><button class="dialog-close" aria-label="關閉分享">×</button><h2>分享這個位置</h2><label for="share-url">複製下方連結，和朋友一起看</label><input id="share-url" readonly><p>連結會保留區、排、號和歌曲選擇。</p></dialog>
+<script type="module" src="./app.js?v=sg2"></script>
+</body></html>
